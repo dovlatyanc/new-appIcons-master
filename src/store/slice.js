@@ -12,7 +12,8 @@ export const gameSlice = createSlice({
     },
     resetClickCount: (state) => {
       state.clickCount = 0
-    },saveCurrentGame(state, action) {
+    }
+    ,saveCurrentGame(state, action) {
       state.currentGame = action.payload; // Сохраняем данные игры
     },
     clearCurrentGame(state) {
@@ -24,6 +25,8 @@ export const gameSlice = createSlice({
 export const { 
   incrementClickCount,
   resetClickCount,
+   saveCurrentGame,
+    clearCurrentGame
 } = gameSlice.actions
 
 export default gameSlice.reducer
