@@ -12,6 +12,11 @@ export const gameSlice = createSlice({
     },
     resetClickCount: (state) => {
       state.clickCount = 0
+    },saveCurrentGame(state, action) {
+      state.currentGame = action.payload; // Сохраняем данные игры
+    },
+    clearCurrentGame(state) {
+      state.currentGame = null; // Очистка текущей игры
     }
   },
 })
