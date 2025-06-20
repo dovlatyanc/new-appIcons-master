@@ -85,6 +85,24 @@ export default  function Game() {
             gameOver: false,
            clickCount: 0}))
       }
+       function handleSaveGame() {
+           dispatch(saveCurrentGame({
+            matrix: matrix,
+             flippedCards: flippedCards,
+             startTime: startTime,
+             gameOver: gameOver,
+             clickCount: clickCount,
+  }));
+}
+
+          function handleLoadGame(savedGame) {
+           if (!savedGame) return;
+            setMatrix(savedGame.matrix);
+           setFlippedCards(savedGame.flippedCards);
+            setStartTime(savedGame.startTime);
+             setGameOver(savedGame.gameOver);
+
+}
     
       function saveRecord(time) {
         const records = getRecords();
@@ -158,6 +176,12 @@ export default  function Game() {
   
     <div className='app'>
       <button onClick={startNewGame}>Новая игра</button>
+      <button onClick={handleSaveGame}>Сохранить игру</button>
+
+      <button onClick={() => {
+        const savedGame = useSelector((state) => state.game.currentGame);
+         handleLoadGame(savedGame);}}> Загрузить игру </button>
+
       <button onClick={() => setShowRecords(!showRecords)}>
         {showRecords ? 'Скрыть рекорды' : 'Показать рекорды'}
       </button>
@@ -177,7 +201,14 @@ export default  function Game() {
           <button onClick={() => localStorage.removeItem('memory-game-records')}>
             Очистить рекорды
           </button>
+          <div className="current-game">
+             <h3>Текущая игра:</h3>
+             <p>Ходы: {clickCount}</p>
+             <p>Статус: {gameOver ? 'Игра окончена' : 'Игра активна'}</p>
+             <p>Время начала: {startTime ? new Date(startTime).toLocaleTimeString() : '-'}</p>
+          </div>
         </div>
+        
       )}
 
       <div className="matrix-container">
