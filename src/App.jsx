@@ -45,18 +45,12 @@ const router = createBrowserRouter([
 
 function App() {
   
- const clickCount = useSelector(state => state.save_game.clickCount);
+
 
   return (
 
       <div>
           <RouterProvider router={router}/>
-           
-    
-    <div>
-      <p>Clicks: {clickCount}</p>
-
-    </div>
         
     </div>
   );

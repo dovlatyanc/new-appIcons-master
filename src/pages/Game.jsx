@@ -64,27 +64,39 @@ export default  function Game() {
       const clickCount = useSelector(
         (state) => state.save_game.clickCount
       )
-      const setClickCount = useDispatch()
+
      
       const dispatch = useDispatch();
 
+      
       function startNewGame() {
+        dispatch(resetClickCount());
 
-        setClickCount(resetClickCount());
-        const newMatrix = createCardMatrix(icons, columns);
-        setMatrix(newMatrix);
-        setFlippedCards([]);
-        setStartTime(Date.now());
-        setGameOver(false);
+        const rawMatrix = createCardMatrix(icons, columns);
+         const serializableMatrix = rawMatrix.map(row => 
+   
+          row.map(card => ({
+            id: card.id,
+            isFlipped: card.isFlipped,
+            isMatched: card.isMatched,
+            iconName: card.iconName
+    }))
+  );
 
-        // Сохраняем начальное состояние игры
-        dispatch(saveCurrentGame({
-           matrix: newMatrix,
-           flippedCards: [],
-           startTime: Date.now(),
-            gameOver: false,
-           clickCount: 0}))
-      }
+  dispatch(saveCurrentGame({
+    matrix: serializableMatrix,
+    flippedCards: [],
+    startTime: Date.now(),
+    gameOver: false,
+    clickCount: 0
+  }));
+
+  setMatrix(rawMatrix);
+  setFlippedCards([]);
+  setStartTime(Date.now());
+  setGameOver(false);
+}
+
        function handleSaveGame() {
            dispatch(saveCurrentGame({
             matrix: matrix,
@@ -129,7 +141,7 @@ export default  function Game() {
         if (blockInteraction) return;
     
         //setClickCount(prev => prev + 1);
-        setClickCount(incrementClickCount())
+        dispatch(incrementClickCount())
 
         const card = matrix[rowIndex][colIndex];
         if (card.isFlipped || card.isMatched || flippedCards.length >= 2) return;
@@ -201,12 +213,7 @@ export default  function Game() {
           <button onClick={() => localStorage.removeItem('memory-game-records')}>
             Очистить рекорды
           </button>
-          <div className="current-game">
-             <h3>Текущая игра:</h3>
-             <p>Ходы: {clickCount}</p>
-             <p>Статус: {gameOver ? 'Игра окончена' : 'Игра активна'}</p>
-             <p>Время начала: {startTime ? new Date(startTime).toLocaleTimeString() : '-'}</p>
-          </div>
+         
         </div>
         
       )}
@@ -225,6 +232,12 @@ export default  function Game() {
           </div>
         ))}
       </div>
+       <div className="current-game">
+             <h3>Текущая игра:</h3>
+             <p>Ходы: {clickCount}</p>
+             <p>Статус: {gameOver ? 'Игра окончена' : 'Игра активна'}</p>
+             <p>Время начала: {startTime ? new Date(startTime).toLocaleTimeString() : '-'}</p>
+          </div>
     </div>
    
   );
