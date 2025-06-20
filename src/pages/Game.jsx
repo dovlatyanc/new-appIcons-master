@@ -2,7 +2,8 @@ import Card from '../Components/Card';
 
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { incrementClickCount, resetClickCount } from '../store/slice'
+import { incrementClickCount, resetClickCount, saveCurrentGame, clearCurrentGame } from '../store/slice'
+
 
 import { 
   FcAlarmClock, 
@@ -59,13 +60,13 @@ export default  function Game() {
       const [startTime, setStartTime] = useState(null);
       const [gameOver, setGameOver] = useState(false);
       const [showRecords, setShowRecords] = useState(false);
-      //const [clickCount, setClickCount] = useState(0);
+    
       const clickCount = useSelector(
         (state) => state.save_game.clickCount
       )
       const setClickCount = useDispatch()
-      //const newSetClicks = dispatch
-    
+     
+      const dispatch = useDispatch();
 
       function startNewGame() {
 
@@ -75,6 +76,14 @@ export default  function Game() {
         setFlippedCards([]);
         setStartTime(Date.now());
         setGameOver(false);
+
+        // Сохраняем начальное состояние игры
+        dispatch(saveCurrentGame({
+           matrix: newMatrix,
+           flippedCards: [],
+           startTime: Date.now(),
+            gameOver: false,
+           clickCount: 0}))
       }
     
       function saveRecord(time) {
