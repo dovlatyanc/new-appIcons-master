@@ -40,21 +40,33 @@ export const gameSlice = createSlice({
         state.matrix[rowIndex][colIndex] = { ...card, isFlipped: true };
       }
     },
-    
+
     unflipCard(state, action) {
       const { rowIndex, colIndex } = action.payload;
       const card = state.matrix[rowIndex][colIndex];
       if (card.isFlipped && !card.isMatched) {
         state.matrix[rowIndex][colIndex] = { ...card, isFlipped: false };
       }
+    },
+       matchCards(state, action) {
+      const { first, second } = action.payload;
+      state.matrix[first.row][first.col] = { ...state.matrix[first.row][first.col], isMatched: true };
+      state.matrix[second.row][second.col] = { ...state.matrix[second.row][second.col], isMatched: true };
+    },
+    startNewGame(state, action) {
+      return { ...state, ...action.payload };
     }
 })
 
 export const { 
-  incrementClickCount,
+   incrementClickCount,
   resetClickCount,
-   saveCurrentGame,
-    clearCurrentGame
+  saveCurrentGame,
+  clearCurrentGame,
+  flipCard,
+  unflipCard,
+  matchCards,
+  startNewGame,
 } = gameSlice.actions
 
 export default gameSlice.reducer
