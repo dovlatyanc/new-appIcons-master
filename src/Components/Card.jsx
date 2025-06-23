@@ -1,10 +1,12 @@
+import * as IconArr from "react-icons/fc"
+
 // Компонент карточки
 
-
- export default function Card({ card, onClick, isFlipped }) {
+export default function Card({ card, onClick }) {
+  const MyIconComponent = IconArr[card.iconName]
   return (
     <div 
-      className={`card ${isFlipped ? 'flipped' : ''}`}
+      className={`card ${card.isFlipped ? 'flipped' : ''}`}
       onClick={onClick}
     >
       <div className="card-inner">
@@ -12,7 +14,7 @@
           <div />
         </div>
         <div className="card-back">
-          <card.IconComponent size={40} />
+          <MyIconComponent size={40} />
         </div>
       </div>
     </div>

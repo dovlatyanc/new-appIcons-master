@@ -3,23 +3,51 @@ import { createSlice } from '@reduxjs/toolkit'
 export const gameSlice = createSlice({
   name: 'game',
   initialState: {
-     clickCount: 0,
-    currentGame: null
+    matrix: [],
+    flippedCards: [],
+    startTime: Date.now(),
+    gameOver: false,
+    clickCount: 0
   },
   reducers: {
-     incrementClickCount: (state) => {
+    incrementClickCount: (state) => {
       state.clickCount += 1
     },
     resetClickCount: (state) => {
       state.clickCount = 0
-    }
-    ,saveCurrentGame(state, action) {
-      state.currentGame = action.payload; // Сохраняем данные игры
+    },
+    saveCurrentGame(state, action) {
+      // Сохраняем данные игры
+      state.clickCount = action.payload.clickCount
+      state.matrix = action.payload.matrix
+      state.flippedCards = action.payload.flippedCards
+      state.startTime = action.payload.startTime
+      state.gameOver = action.payload.gameOver
+      //state = action.payload; // Сохраняем данные игры
     },
     clearCurrentGame(state) {
-      state.currentGame = null; // Очистка текущей игры
-    }
+      state.matrix = []
+      state.flippedCards = []
+      state.startTime = Date.now()
+      state.gameOver = false
+      state.clickCount = 0
+    }  // Очистка текущей игры
   },
+   flipCard(state, action) {
+      const { rowIndex, colIndex } = action.payload;
+      const card = state.matrix[rowIndex][colIndex];
+      if (!card.isFlipped && !card.isMatched) {
+        state.matrix[rowIndex][colIndex] = { ...card, isFlipped: true };
+      }
+    },
+    
+    unflipCard(state, action) {
+      const { rowIndex, colIndex } = action.payload;
+      const card = state.matrix[rowIndex][colIndex];
+      if (card.isFlipped && !card.isMatched) {
+        state.matrix[rowIndex][colIndex] = { ...card, isFlipped: false };
+      }
+    }
 })
 
 export const { 

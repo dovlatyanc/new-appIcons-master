@@ -7,7 +7,6 @@ import Game from './pages/Game';
 import { createBrowserRouter } from "react-router-dom"
 import { RouterProvider } from "react-router-dom"
 import { Outlet } from "react-router-dom"
-import { useSelector } from 'react-redux';
 
 
 function NavbarWrapper(){
