@@ -5,6 +5,9 @@ export default function Navbar() {
     <>
       <nav>
         <ul>
+           <li>
+            <Link to="/">Home</Link>
+          </li>
           <li>
             <Link to="/About">About us</Link>
           </li>
@@ -12,8 +15,15 @@ export default function Navbar() {
             <Link to="/418">I'm teapot</Link>
           </li>
            <li>
-            <Link to="/">Игра Бирюльки</Link>
+            <Link to="/game">Игра Бирюльки</Link>
           </li>
+            <li>
+            <Link to="/2048">Игра 2048</Link>
+          </li>
+            <li>
+            <Link to="/tictactoe">Игра Крестики-Нолики</Link>
+          </li>
+          
         </ul>
       </nav>
     </>

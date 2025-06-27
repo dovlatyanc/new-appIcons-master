@@ -4,9 +4,12 @@ import Navbar   from './pages/NavBar';
 import NotFound from './pages/notFound';
 import AboutUs from './pages/AboutUs';
 import Game from './pages/Game';
+import Home from './pages/Home';
 import { createBrowserRouter } from "react-router-dom"
 import { RouterProvider } from "react-router-dom"
 import { Outlet } from "react-router-dom"
+import Game2048 from './pages/Game2048';
+import TicTacToe from './pages/TicTacToe';
 
 
 function NavbarWrapper(){
@@ -23,6 +26,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <NavbarWrapper/>,
         children:[
+             {
+                path: "/",
+                element: <Home/>
+            },
             {
                 path: "/About",
                 element: <AboutUs />
@@ -30,10 +37,23 @@ const router = createBrowserRouter([
             {
                 path: "/418",
                 element: <NotFound/>
-            }, {
-                path: "/",
-                element: <Game/>
+            },
+            {
+                path: "/game",
+                element: <Game/>,
+                
+            },
+              {
+                path: "/2048",
+                element: <Game2048/>,
+                
+            }  ,
+            {
+                path: "/tictactoe",
+                element: <TicTacToe/>,
+                
             }
+           
         ]
     }
 ])
@@ -49,8 +69,7 @@ function App() {
   return (
 
       <div>
-          <RouterProvider router={router}/>
-        
+          <RouterProvider router={router}/> 
     </div>
   );
 }

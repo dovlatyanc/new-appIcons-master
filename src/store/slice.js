@@ -1,65 +1,66 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState: {
     matrix: [],
     flippedCards: [],
-    startTime: Date.now(),
+    startTime: null,
     gameOver: false,
-    clickCount: 0
+    clickCount: 0,
   },
   reducers: {
-    incrementClickCount: (state) => {
-      state.clickCount += 1
+    incrementClickCount(state) {
+      state.clickCount += 1;
     },
-    resetClickCount: (state) => {
-      state.clickCount = 0
+    resetClickCount(state) {
+      state.clickCount = 0;
     },
     saveCurrentGame(state, action) {
-      // Сохраняем данные игры
-      state.clickCount = action.payload.clickCount
-      state.matrix = action.payload.matrix
-      state.flippedCards = action.payload.flippedCards
-      state.startTime = action.payload.startTime
-      state.gameOver = action.payload.gameOver
-      //state = action.payload; // Сохраняем данные игры
+      return { ...state, ...action.payload };
     },
     clearCurrentGame(state) {
-      state.matrix = []
-      state.flippedCards = []
-      state.startTime = Date.now()
-      state.gameOver = false
-      state.clickCount = 0
-    }  // Очистка текущей игры
-  },
-   flipCard(state, action) {
+      state.matrix = [];
+      state.flippedCards = [];
+      state.startTime = null;
+      state.gameOver = false;
+      state.clickCount = 0;
+    },
+    flipCard(state, action) {
       const { rowIndex, colIndex } = action.payload;
       const card = state.matrix[rowIndex][colIndex];
       if (!card.isFlipped && !card.isMatched) {
         state.matrix[rowIndex][colIndex] = { ...card, isFlipped: true };
+        // Добавляем карту в flippedCards
+        state.flippedCards.push({ row: rowIndex, col: colIndex });
       }
     },
-
     unflipCard(state, action) {
-      const { rowIndex, colIndex } = action.payload;
-      const card = state.matrix[rowIndex][colIndex];
+      const { row, col } = action.payload;
+      const card = state.matrix[row][col];
       if (card.isFlipped && !card.isMatched) {
-        state.matrix[rowIndex][colIndex] = { ...card, isFlipped: false };
+        state.matrix[row][col] = { ...card, isFlipped: false };
+        // Удаляем из flippedCards
+        state.flippedCards = state.flippedCards.filter(
+          c => !(c.row === row && c.col === col)
+        );
       }
     },
-       matchCards(state, action) {
+    matchCards(state, action) {
       const { first, second } = action.payload;
-      state.matrix[first.row][first.col] = { ...state.matrix[first.row][first.col], isMatched: true };
-      state.matrix[second.row][second.col] = { ...state.matrix[second.row][second.col], isMatched: true };
+      state.matrix[first.row][first.col].isMatched = true;
+      state.matrix[second.row][second.col].isMatched = true;
+      // Очищаем flippedCards
+      state.flippedCards = [];
     },
     startNewGame(state, action) {
       return { ...state, ...action.payload };
-    }
-})
+    },
+  },
+});
 
-export const { 
-   incrementClickCount,
+export const {
+  incrementClickCount,
   resetClickCount,
   saveCurrentGame,
   clearCurrentGame,
@@ -67,6 +68,6 @@ export const {
   unflipCard,
   matchCards,
   startNewGame,
-} = gameSlice.actions
+} = gameSlice.actions;
 
-export default gameSlice.reducer
+export default gameSlice.reducer;

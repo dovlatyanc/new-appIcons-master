@@ -1,9 +1,319 @@
+/* src/App.css */
+:root {
+  --primary: #4a76a8;
+  --primary-dark: #3a6598;
+  --secondary: #ff6b6b;
+  --accent: #4ecdc4;
+  --light: #f8f9fa;
+  --dark: #2b2d42;
+  --gray: #6c757d;
+  --light-gray: #e9ecef;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+  --border-radius: 12px;
+  --navbar-height: 70px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background-color: #f5f7fa;
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.app-container {
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+}
+
+/* Навбар */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--navbar-height);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  max-width: 1200px;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.navbar li {
+  margin: 0 10px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 8px 15px;
+  border-radius: 50px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.navbar a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.navbar a svg {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+/* Основной контент */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--primary);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.page-title:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Главная страница */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--gray);
+  margin-bottom: 30px;
+}
+
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.game-card {
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.game-card-image {
+  height: 200px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 4rem;
+}
+
+.game-card-content {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: var(--primary);
+}
+
+.game-card p {
+  color: var(--gray);
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.game-card .btn {
+  align-self: flex-start;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(74, 118, 168, 0.3);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+}
+
+.btn-secondary:hover {
+  background: #ff5252;
+  box-shadow: 0 6px 12px rgba(255, 107, 107, 0.3);
+}
+
+.btn-accent {
+  background: var(--accent);
+}
+
+.btn-accent:hover {
+  background: #3dbdb4;
+  box-shadow: 0 6px 12px rgba(78, 205, 196, 0.3);
+}
+
+.btn-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+/* Страница игры */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.game-stats {
+  background: white;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: var(--light);
+  padding: 15px 20px;
+  border-radius: var(--border-radius);
+  min-width: 150px;
+  text-align: center;
+}
+
+.stat-card h4 {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.stat-card p {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Карточки игры */
+.matrix-container {
+  background: white;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
 
 .card {
   width: 80px;
   height: 80px;
+  margin: 8px;
   perspective: 1000px;
-  margin: 5px;
   cursor: pointer;
 }
 
@@ -14,6 +324,8 @@
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card.flipped .card-inner {
@@ -24,45 +336,208 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
 }
 
 .card-front {
-  background: linear-gradient(135deg, #6a11cb 0%, #0d1f3c 100%);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
 }
 
 .card-back {
-  background-color: white;
+  background: white;
   transform: rotateY(180deg);
 }
 
-
-.app{
-  margin-left: 500px;
+.card-back svg {
+  font-size: 2rem;
 }
 
-.game-header button {
-  padding: 8px 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+/* Таблица рекордов */
+.records-table {
+  background: white;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin: 30px 0;
+  width: 100%;
+  max-width: 600px;
 }
 
-.stats {
-  font-weight: bold;
-  color: #333;
+.records-table h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary);
 }
 
-.row {
+.records-list {
+  list-style: none;
+  margin: 20px 0;
+}
+
+.record-item {
   display: flex;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.record-item:nth-child(odd) {
+  background: var(--light);
+}
+
+/* Страница 404 */
+.not-found {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.not-found h1 {
+  font-size: 8rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.not-found h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.teapot-icon {
+  font-size: 10rem;
+  color: var(--secondary);
+  margin: 30px 0;
+}
+
+/* Страница "О нас" */
+.about-page {
+  text-align: center;
+}
+
+.team-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.team-member {
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+}
+
+.member-photo {
+  height: 200px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  display: flex;
+  align-items: center;
   justify-content: center;
+  color: white;
+  font-size: 5rem;
+}
+
+.member-info {
+  padding: 25px;
+}
+
+.member-info h3 {
+  font-size: 1.5rem;
+  color: var(--primary);
   margin-bottom: 10px;
+}
+
+.member-info p {
+  color: var(--gray);
+  margin-bottom: 15px;
+}
+
+.contact-section {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 40px;
+  box-shadow: var(--shadow);
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  background: var(--light);
+  padding: 15px 25px;
+  border-radius: 50px;
+}
+
+.contact-item svg {
+  margin-right: 10px;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .navbar a span {
+    display: none;
+  }
+  
+  .navbar a svg {
+    margin-right: 0;
+    font-size: 1.5rem;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .game-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-card {
+    min-width: 120px;
+    padding: 10px 15px;
+  }
+  
+  .card {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 50px;
+    height: 50px;
+    margin: 4px;
+  }
+  
+  .not-found h1 {
+    font-size: 5rem;
+  }
+  
+  .btn-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
