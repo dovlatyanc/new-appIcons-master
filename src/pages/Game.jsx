@@ -170,13 +170,29 @@ function saveRecord(time) {
 function checkGameCompletion() {
   if (!Array.isArray(matrix)) return;
 
-  const allMatched = matrix.flat().every(card => card?.isMatched);
+  const flatMatrix = matrix.flat();
+  const allMatched = flatMatrix.every(card => card?.isMatched);
+
+  // Добавляем дебаг
+  if (!allMatched) {
+    console.log('⚠️ Не все карты совпали:');
+    flatMatrix.forEach((card, index) => {
+      if (!card.isMatched) {
+        console.log(`Карта ${index} не совпала:`, card);
+      }
+    });
+  }
+
   if (allMatched && !gameOver) {
     const endTime = Date.now();
     const timeTaken = Math.floor((endTime - startTime) / 1000);
     saveRecord(timeTaken);
-    dispatch(setGameOver(true)); 
-    console.log("Игра завершена! Time taken:", timeTaken);
+    dispatch(setGameOver(true));
+    console.log("✅ Игра завершена! Time taken:", timeTaken);
+  } else if (allMatched) {
+    console.log("🏁 Игра уже завершена.");
+  } else {
+    console.log("❌ Не все карты совпали:", { allMatched });
   }
 }
 
@@ -240,7 +256,7 @@ function checkGameCompletion() {
       <div className="current-game">
         <h3>Текущая игра:</h3>
         <p>Ходы: {clickCount}</p>
-       <p>Статус: {gameOver ? 'Игра окончена' : 'Игра активна'} (gameOver={gameOver})</p>
+        <p>Статус: {gameOver === true ? 'Игра окончена' : 'Игра активна'} (gameOver={String(gameOver)})</p>
         <p>Время начала: {startTime ? new Date(startTime).toLocaleTimeString() : '-'}</p>
       </div>
     </div>
