@@ -71,6 +71,7 @@ export const {
   unflipCard,
   matchCards,
   startNewGame,
+  setGameOver
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

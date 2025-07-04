@@ -9,6 +9,8 @@ import {
   unflipCard,
   matchCards,
   startNewGame,
+  setGameOver,
+  clearCurrentGame
 } from '../store/slice';
 
 import {
@@ -121,6 +123,8 @@ export default function Game() {
       }))
     );
 
+    dispatch(setGameOver(false));
+    dispatch(clearCurrentGame());
     dispatch(startNewGame({
       matrix: serializableMatrix,
       flippedCards: [],
@@ -164,13 +168,15 @@ function saveRecord(time) {
   }
 
 function checkGameCompletion() {
-  const allMatched = matrix.flat().every(card => card.isMatched);
+  if (!Array.isArray(matrix)) return;
+
+  const allMatched = matrix.flat().every(card => card?.isMatched);
   if (allMatched && !gameOver) {
     const endTime = Date.now();
     const timeTaken = Math.floor((endTime - startTime) / 1000);
-    saveRecord(timeTaken); 
-    dispatch(saveCurrentGame({ gameOver: true }));
-    console.log("Рекорд сохранён:", { time: timeTaken, date: new Date() });//отладка
+    saveRecord(timeTaken);
+    dispatch(setGameOver(true)); 
+    console.log("Игра завершена! Time taken:", timeTaken);
   }
 }
 
@@ -234,7 +240,7 @@ function checkGameCompletion() {
       <div className="current-game">
         <h3>Текущая игра:</h3>
         <p>Ходы: {clickCount}</p>
-        <p>Статус: {gameOver ? 'Игра окончена' : 'Игра активна'}</p>
+       <p>Статус: {gameOver ? 'Игра окончена' : 'Игра активна'} (gameOver={gameOver})</p>
         <p>Время начала: {startTime ? new Date(startTime).toLocaleTimeString() : '-'}</p>
       </div>
     </div>
