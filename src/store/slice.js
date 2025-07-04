@@ -56,6 +56,9 @@ export const gameSlice = createSlice({
     startNewGame(state, action) {
       return { ...state, ...action.payload };
     },
+     setGameOver(state) {
+      state.gameOver = true;
+    }, 
   },
 });
 

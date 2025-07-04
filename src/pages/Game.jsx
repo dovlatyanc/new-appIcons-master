@@ -152,26 +152,27 @@ export default function Game() {
     }
   }
 
-  function saveRecord(time) {
-    const records = getRecords();
-    records.push({ time, date: new Date().toISOString() });
-    localStorage.setItem('memory-game-records', JSON.stringify(records));
-  }
+function saveRecord(time) { 
+  const records = getRecords();
+  records.push({ time, date: new Date().toISOString() });
+  localStorage.setItem('memory-game-records', JSON.stringify(records));
+}
 
   function getRecords() {
     const stored = localStorage.getItem('memory-game-records');
     return stored ? JSON.parse(stored) : [];
   }
 
-  function checkGameCompletion() {
-    const allMatched = matrix.flat().every(card => card.isMatched);
-    if (allMatched && !gameOver) {
-      const endTime = Date.now();
-      const timeTaken = Math.floor((endTime - startTime) / 1000);
-      saveRecord(timeTaken);
-      dispatch(saveCurrentGame({ gameOver: true }));
-    }
+function checkGameCompletion() {
+  const allMatched = matrix.flat().every(card => card.isMatched);
+  if (allMatched && !gameOver) {
+    const endTime = Date.now();
+    const timeTaken = Math.floor((endTime - startTime) / 1000);
+    saveRecord(timeTaken); 
+    dispatch(saveCurrentGame({ gameOver: true }));
+    console.log("Рекорд сохранён:", { time: timeTaken, date: new Date() });//отладка
   }
+}
 
   function handleCardClick(rowIndex, colIndex) {
     if (blockInteraction) return;
