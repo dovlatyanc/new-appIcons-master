@@ -85,6 +85,11 @@ export default function Game() {
       startNewGameHandler();
     }
   }, []);
+  useEffect(() => {
+  if (matrix.length > 0 && !gameOver) {
+    checkGameCompletion();
+  }
+}, [matrix, gameOver]);
 
   // Обработка совпадения карт
   useEffect(() => {
