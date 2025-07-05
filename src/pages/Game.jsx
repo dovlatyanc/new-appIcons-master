@@ -172,34 +172,17 @@ function saveRecord(time) {
     return stored ? JSON.parse(stored) : [];
   }
 
-function checkGameCompletion() {
-  if (!Array.isArray(matrix)) return;
-
-  const flatMatrix = matrix.flat();
-  const allMatched = flatMatrix.every(card => card?.isMatched);
-
-  // Добавляем дебаг
-  if (!allMatched) {
-    console.log('⚠️ Не все карты совпали:');
-    flatMatrix.forEach((card, index) => {
-      if (!card.isMatched) {
-        console.log(`Карта ${index} не совпала:`, card);
-      }
-    });
+  function checkGameCompletion() {
+    const flatMatrix = matrix.flat();
+    if (flatMatrix.length === 0) return;
+    
+    const allMatched = flatMatrix.every(card => card.isMatched);
+    if (allMatched && !gameOver) {
+      const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+      saveRecord(timeTaken);
+      dispatch(setGameOver(true));
+    }
   }
-
-  if (allMatched && !gameOver) {
-    const endTime = Date.now();
-    const timeTaken = Math.floor((endTime - startTime) / 1000);
-    saveRecord(timeTaken);
-    dispatch(setGameOver(true));
-    console.log("✅ Игра завершена! Time taken:", timeTaken);
-  } else if (allMatched) {
-    console.log("🏁 Игра уже завершена.");
-  } else {
-    console.log("❌ Не все карты совпали:", { allMatched });
-  }
-}
 
   function handleCardClick(rowIndex, colIndex) {
     if (blockInteraction) return;
