@@ -115,7 +115,8 @@ export default function Game() {
     }
   }, [flippedCards, blockInteraction, dispatch, matrix]);
 
-  // Инициализация новой игры
+  // Инициализация новой игры 
+  
   function startNewGameHandler() {
     dispatch(resetClickCount());
     const rawMatrix = createCardMatrix(icons, columns);
