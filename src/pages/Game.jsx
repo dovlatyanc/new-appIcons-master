@@ -98,7 +98,7 @@ export default function Game() {
         setTimeout(() => {
           dispatch(matchCards({ first, second }));
           setBlockInteraction(false);
-          checkGameCompletion();
+      
         }, 500);
       } else {
         setTimeout(() => {
