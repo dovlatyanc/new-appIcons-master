@@ -1,11 +1,16 @@
-const appcfg = require('./appcfg');
 const express = require("express");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const port = appcfg.webServerPort;
-const SECRET_KEY = '306aa1fbe68377fa74ce5bc5394d5a42cbe2629bde645232a0547881a23d627d';
+const port = process.env.PORT || 3001;
+const SECRET_KEY = process.env.JWT_SECRET;
+
+if (!SECRET_KEY) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined');
+  process.exit(1);
+}
 
 // Временное хранилище данных 
 const users = [];
