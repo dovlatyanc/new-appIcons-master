@@ -10,7 +10,8 @@ import { RouterProvider } from "react-router-dom"
 import { Outlet } from "react-router-dom"
 import Game2048 from './pages/Game2048';
 import TicTacToe from './pages/TicTacToe';
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 function NavbarWrapper(){
     return (
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
 
 function App() {
   
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      dispatch({ type: 'auth/checkAuth' });
+    }
+  }, [dispatch]);
 
 
   return (

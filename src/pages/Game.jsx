@@ -13,6 +13,7 @@ import {
   clearCurrentGame
 } from '../store/slice';
 
+import AuthForm from '../Components/AuthForm';
 import {
   FcAlarmClock,
   FcBinoculars,
@@ -75,7 +76,7 @@ export default function Game() {
   const startTime = useSelector((state) => state.game.startTime);
   const gameOver = useSelector((state) => state.game.gameOver);
   const flippedCards = useSelector((state) => state.game.flippedCards);
-
+  const { user } = useSelector(state => state.auth);
   const [blockInteraction, setBlockInteraction] = useState(false);
   const [showRecords, setShowRecords] = useState(false);
 
@@ -162,11 +163,26 @@ export default function Game() {
     }
   }
 
-function saveRecord(time) { 
-  const records = getRecords();
-  records.push({ time, date: new Date().toISOString() });
-  localStorage.setItem('memory-game-records', JSON.stringify(records));
-}
+  async function saveRecord(time) {
+    if (user) {
+      try {
+        await fetch('http://localhost:3001/api/save-record', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          },
+          body: JSON.stringify({ time }),
+        });
+      } catch (error) {
+        console.error('Ошибка сохранения рекорда:', error);
+      }
+    } else {
+      const records = getRecords();
+      records.push({ time, date: new Date().toISOString() });
+      localStorage.setItem('memory-game-records', JSON.stringify(records));
+    }
+  }
 
   function getRecords() {
     const stored = localStorage.getItem('memory-game-records');
@@ -197,6 +213,15 @@ function saveRecord(time) {
 
   return (
     <div className='app'>
+         
+      {!user ? (
+        <AuthForm />
+      ) : (
+        <div className="user-info">
+          <p>Пользователь: {user.username}</p>
+          <button onClick={() => dispatch(logout())}>Выйти</button>
+        </div>
+      )}
       <button onClick={startNewGameHandler}>Новая игра</button>
       <button onClick={handleSaveGame}>Сохранить игру</button>
       <button onClick={handleLoadGame}>Загрузить игру</button>
