@@ -53,26 +53,29 @@ export default function Game2048() {
 
   // Логика движения вправо
   function moveRight() {
-    let newGrid = JSON.parse(JSON.stringify(grid));
+  let newGrid = JSON.parse(JSON.stringify(grid));
 
-    for (let row = 0; row < 4; row++) {
-      let line = newGrid[row].filter(val => val !== 0);
-      for (let i = line.length - 1; i >= 1; i--) {
-        if (line[i] === line[i - 1]) {
-          line[i] *= 2;
-          line[i - 1] = 0;
-        }
+  for (let row = 0; row < 4; row++) {
+    let line = newGrid[row].filter(val => val !== 0);
+    for (let i = line.length - 1; i >= 1; i--) {
+      if (line[i] === line[i - 1]) {
+        line[i] *= 2;
+        line[i - 1] = 0;
       }
-      line = line.filter(val => val !== 0);
-      while (line.length < 4) line.unshift(0);
-      newGrid[row] = line;
     }
 
-    if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
-      newGrid = addRandomTile(newGrid);
-      setGrid(newGrid);
-    }
+    // Перемещаем объединённые значения к правому краю
+    line = line.filter(val => val !== 0);
+    while (line.length < 4) line.unshift(0); // ← именно тут мы добавляем 0 слева
+
+    newGrid[row] = line;
   }
+
+  if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
+    newGrid = addRandomTile(newGrid);
+    setGrid(newGrid);
+  }
+}
 
   // Проверка победы
   useEffect(() => {
