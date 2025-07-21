@@ -541,6 +541,17 @@ body {
     align-items: stretch;
   }
 }
+/* src/index.css */
+body {
+  background-color: #faf8ef;
+  font-family: sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .game2048-container {
   background-color: #bbada0;
   padding: 20px;
@@ -554,13 +565,4 @@ body {
   grid-template-rows: repeat(4, 80px);
   gap: 5px;
   margin-top: 20px;
-}
-
-.tile {
-  background-color: #eee4da;
-  color: #000;
-  font-weight: bold;
-  text-align: center;
-  padding: 20px;
-  border-radius: 8px;
 }
