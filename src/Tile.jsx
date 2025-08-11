@@ -1,5 +1,4 @@
-// src/Tile.jsx
-import React from 'react';
+
 
 const Tile = ({ value }) => {
   const tileStyle = {
