@@ -1,0 +1,50 @@
+
+.about-us {
+  max-width: 900px;
+  margin: 40px auto;
+  margin-top: 450px;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  color: #333;
+}
+
+.hero {
+    
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #4a76a8, #3a6598);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.content h2 {
+  color: #4a76a8;
+  margin: 30px 0 15px 0;
+  font-size: 1.6rem;
+}
+
+.call-to-action {
+  text-align: center;
+  padding: 30px 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-top: 30px;
+  font-style: italic;
+  color: #555;
+}
+
+.call-to-action strong {
+  color: #4a76a8;
+}

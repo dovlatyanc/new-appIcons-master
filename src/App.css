@@ -566,3 +566,208 @@ body {
   gap: 5px;
   margin-top: 20px;
 }
+
+/* === АДАПТИВНЫЙ НАВБАР С БУРГЕРОМ === */
+
+.navbar {
+ position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px; /* или var(--navbar-height) */
+  background: linear-gradient(135deg, #4a76a8, #3a6598);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* важно: выше остального контента */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 70px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navbar-logo:hover {
+  color: #3498db;
+}
+
+/* Бургер-иконка */
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+/* Анимация бургера в "крестик" */
+.bar.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.bar.open:nth-child(2) {
+  opacity: 0;
+}
+.bar.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Меню */
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+  
+}
+
+.navbar-menu li {
+  position: relative;
+}
+
+.nav-link {
+  color: #34495e;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+  display: block;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #3498db;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #3498db;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.navbar-language {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+/* === МОБИЛЬНЫЕ СТИЛИ === */
+
+@media (max-width: 768px) {
+ .navbar-container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+    gap: 12px;
+    position: relative;
+  }
+
+  .navbar-logo {
+    font-size: 1.2rem;
+    order: 1;
+  }
+
+  .navbar-language {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px; /* Отступ под бургером */
+  }
+
+  /* Показываем бургер */
+  .navbar-toggle {
+    display: flex;
+    order: 3;
+  }
+
+  /* Скрываем меню по умолчанию */
+ .navbar-menu {
+    display: none; /* Скрываем меню по умолчанию */
+    flex-direction: column;
+    background-color: rgb(0, 78, 106);
+    color: black;
+    width: 100%;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    gap: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1001;
+    transition: all 0.3s ease; /* Плавная анимация */
+  }
+
+
+  /* Показываем меню, когда active */
+  .navbar-menu.active {
+    display: none;
+   
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-align: left;
+  }
+
+  .nav-link::after {
+    bottom: auto;
+    top: 50%;
+    right: 20px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #3498db;
+    border-bottom: 2px solid #3498db;
+    transform: rotate(-45deg);
+    content: '';
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Убираем подчёркивание-стрелку при активе */
+  .nav-link.active::after {
+    transform: rotate(45deg);
+    border-color: #2980b9;
+  }
+
+}

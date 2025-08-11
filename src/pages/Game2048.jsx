@@ -64,7 +64,40 @@ function spawnTile(grid) {
 
     return merged;
   }
+  function resetGame() {
+  let freshGrid = Array(4).fill().map(() => Array(4).fill(0));
+  freshGrid = spawnTile(freshGrid);
+  freshGrid = spawnTile(freshGrid);
 
+  setGrid(freshGrid);
+  setScore(0);
+  setGameOver(false);
+  setGameWon(false);
+}
+  function isGameOver(grid) {
+  // Есть ли пустые ячейки?
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 4; col++) {
+      if (grid[row][col] === 0) return false;
+    }
+  }
+
+  // Можно ли слить по горизонтали?
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 3; col++) {
+      if (grid[row][col] === grid[row][col + 1]) return false;
+    }
+  }
+
+  // Можно ли слить по вертикали?
+  for (let col = 0; col < 4; col++) {
+    for (let row = 0; row < 3; row++) {
+      if (grid[row][col] === grid[row + 1][col]) return false;
+    }
+  }
+
+  return true;
+}
   // Обработчик движения
   function handleMove(direction) {
   if (gameOver) return;
@@ -193,14 +226,22 @@ function spawnTile(grid) {
 
   return (
     <div className="game-container">
-   
-      <div className="grid">
-        {grid.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <Tile key={`${rowIndex}-${colIndex}`} value={cell} />
-          ))
-        )}
-      </div>
-    </div>
+  <div className="header">
+    <h2>2048</h2>
+    <div>Очки: {score}</div>
+    <button onClick={resetGame}>Новая игра</button>
+  </div>
+
+  {gameWon && <div className="message">🎉 Победа! 2048 достигнуто!</div>}
+  {gameOver && !gameWon && <div className="message">💥 Игра окончена! Нет ходов.</div>}
+
+  <div className="grid">
+    {grid.map((row, rowIndex) =>
+      row.map((cell, colIndex) => (
+        <Tile key={`${rowIndex}-${colIndex}`} value={cell} />
+      ))
+    )}
+  </div>
+</div>
   );
 }

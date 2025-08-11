@@ -13,7 +13,7 @@ import {
   clearCurrentGame
 } from '../store/slice';
 
-import AuthForm from '../Components/AuthForm';
+
 import {
   FcAlarmClock,
   FcBinoculars,
@@ -214,14 +214,7 @@ export default function Game() {
   return (
     <div className='app'>
          
-      {!user ? (
-        <AuthForm />
-      ) : (
-        <div className="user-info">
-          <p>Пользователь: {user.username}</p>
-          <button onClick={() => dispatch(logout())}>Выйти</button>
-        </div>
-      )}
+      
       <button onClick={startNewGameHandler}>Новая игра</button>
       <button onClick={handleSaveGame}>Сохранить игру</button>
       <button onClick={handleLoadGame}>Загрузить игру</button>

@@ -12,6 +12,7 @@ import Game2048 from './pages/Game2048';
 import TicTacToe from './pages/TicTacToe';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Auth } from './pages/Auth';
 
 function NavbarWrapper(){
     return (
@@ -53,7 +54,13 @@ const router = createBrowserRouter([
                 path: "/tictactoe",
                 element: <TicTacToe/>,
                 
+            },
+                {
+                path: "/auth",
+                element: <Auth/>,
+                
             }
+           
            
         ]
     }

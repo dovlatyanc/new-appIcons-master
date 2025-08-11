@@ -1,0 +1,37 @@
+.home-page {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  color: #2c3e50;
+  text-align: center;
+}
+
+.section-title {
+  color: #3498db;
+  margin-top: 30px;
+}
+
+.category-list, .advantages-list {
+  padding-left: 20px;
+}
+
+.category-item, .advantage-item {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.cta-section {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.2em;
+}
+
+.cta-moto {
+  color: #e74c3c;
+  font-weight: bold;
+}

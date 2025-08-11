@@ -12,7 +12,7 @@ function LanguageSwitcher() {
       <select
         onChange={(e) => changeLanguage(e.target.value)}
         value={i18n.language}
-        style={{ marginLeft: '8px' }}
+        style={{ marginLeft: '8px',color:"black" }}
       >
         <option value="en">English</option>
         <option value="ru">Русский</option>

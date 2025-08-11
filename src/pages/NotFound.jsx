@@ -11,7 +11,7 @@ export default function NotFound() {
       <p>Извините, но я не могу заварить кофе, потому что я чайник.</p>
       <div className="btn-group">
         <Link to="/" className="btn">На главную</Link>
-        <Link to="/game" className="btn btn-secondary">Играть в Бирюльки</Link>
+       
       </div>
     </div>
   );
