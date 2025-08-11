@@ -541,3 +541,28 @@ body {
     align-items: stretch;
   }
 }
+/* src/index.css */
+body {
+  background-color: #faf8ef;
+  font-family: sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game-container {
+  background-color: #bbada0;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  grid-template-rows: repeat(4, 80px);
+  gap: 5px;
+  margin-top: 20px;
+}
