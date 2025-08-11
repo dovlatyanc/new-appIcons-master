@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
 import LanguageSwitcher from  "../Components/LanguageSwitcher"
+import { useTranslation } from 'react-i18next';
 
 export default function Navbar() {
+   const { t } = useTranslation();
   return (
     <>
          <div>  
@@ -11,22 +13,22 @@ export default function Navbar() {
    
         <ul>
            <li>
-            <Link to="/">Home</Link>
+            <Link to="/">{t('home')}</Link> 
           </li>
           <li>
-            <Link to="/About">About us</Link>
+            <Link to="/About">{t('about')}</Link> 
           </li>
           <li>
-            <Link to="/418">I'm teapot</Link>
+            <Link to="/418">{t('418')}</Link>
           </li>
            <li>
-            <Link to="/game">Игра Бирюльки</Link>
+            <Link to="/game">{t('games')}</Link>
           </li>
             <li>
-            <Link to="/2048">Игра 2048</Link>
+            <Link to="/2048">{t('game_2048')}</Link>
           </li>
             <li>
-            <Link to="/tictactoe">Игра Крестики-Нолики</Link>
+            <Link to="/tictactoe">{t('tictactoe')}</Link>
           </li>
           
         </ul>
