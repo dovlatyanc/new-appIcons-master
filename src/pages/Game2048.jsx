@@ -9,7 +9,27 @@ export default function Game2048() {
     [0, 0, 0, 0],
     [0, 0, 0, 4]
   ]);
+  
+function spawnTile(grid) {
+  const newGrid = JSON.parse(JSON.stringify(grid));
+  const emptyCells = [];
 
+  // Найти все пустые ячейки
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 4; col++) {
+      if (newGrid[row][col] === 0) {
+        emptyCells.push({ row, col });
+      }
+    }
+  }
+
+  if (emptyCells.length > 0) {
+    const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    newGrid[row][col] = Math.random() < 0.9 ? 2 : 4;
+  }
+
+  return newGrid;
+}
   // Сравнивает два массива
   function arraysEqual(a, b) {
     return a.length === b.length && a.every((val, index) => val === b[index]);
