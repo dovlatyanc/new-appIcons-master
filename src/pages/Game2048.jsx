@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 import Tile from '../Tile';
 
 export default function Game2048() {
-  const [grid, setGrid] = useState([
-    [2, 2, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 4]
-  ]);
+const [score, setScore] = useState(0);
+const [gameOver, setGameOver] = useState(false);
+const [gameWon, setGameWon] = useState(false);
+
+const [grid, setGrid] = useState(() => {
+  let initial = Array(4).fill().map(() => Array(4).fill(0));
+  initial = spawnTile(initial);
+  initial = spawnTile(initial);
+  return initial;
+});
   
 function spawnTile(grid) {
   const newGrid = JSON.parse(JSON.stringify(grid));
