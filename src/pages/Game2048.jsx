@@ -67,61 +67,112 @@ function spawnTile(grid) {
 
   // Обработчик движения
   function handleMove(direction) {
-    const newGrid = JSON.parse(JSON.stringify(grid));
-    let changed = false;
+  if (gameOver) return;
 
-    switch (direction) {
-      case 'ArrowLeft':
+  const newGrid = JSON.parse(JSON.stringify(grid));
+  let changed = false;
+  let gainedScore = 0;
+
+  switch (direction) {
+    case 'ArrowLeft':
+      for (let row = 0; row < 4; row++) {
+        const oldRow = [...newGrid[row]];
+        const processed = processLine(newGrid[row], false, false);
+        newGrid[row] = processed;
+
+        if (!arraysEqual(oldRow, processed)) {
+          changed = true;
+        }
+
+        // Подсчёт очков
+        processed.forEach((val, i) => {
+          if (val !== oldRow[i] && val === oldRow[i] * 2) {
+            gainedScore += val;
+          }
+        });
+      }
+      break;
+
+    case 'ArrowRight':
+      for (let row = 0; row < 4; row++) {
+        const oldRow = [...newGrid[row]];
+        const processed = processLine(newGrid[row], true, true);
+        newGrid[row] = processed;
+
+        if (!arraysEqual(oldRow, processed)) {
+          changed = true;
+        }
+
+        processed.forEach((val, i) => {
+          if (val !== oldRow[i] && val === oldRow[i] * 2) {
+            gainedScore += val;
+          }
+        });
+      }
+      break;
+
+    case 'ArrowUp':
+      for (let col = 0; col < 4; col++) {
+        const column = [newGrid[0][col], newGrid[1][col], newGrid[2][col], newGrid[3][col]];
+        const oldCol = [...column];
+        const processed = processLine(column, false, false);
+
         for (let row = 0; row < 4; row++) {
-          const processed = processLine(newGrid[row], false, false);
-          if (!arraysEqual(newGrid[row], processed)) {
-            newGrid[row] = processed;
-            changed = true;
-          }
+          newGrid[row][col] = processed[row];
         }
-        break;
 
-      case 'ArrowRight':
+        if (!arraysEqual(oldCol, processed)) {
+          changed = true;
+        }
+
+        processed.forEach((val, i) => {
+          if (val !== oldCol[i] && val === oldCol[i] * 2) {
+            gainedScore += val;
+          }
+        });
+      }
+      break;
+
+    case 'ArrowDown':
+      for (let col = 0; col < 4; col++) {
+        const column = [newGrid[0][col], newGrid[1][col], newGrid[2][col], newGrid[3][col]];
+        const oldCol = [...column];
+        const processed = processLine(column, true, true);
+
         for (let row = 0; row < 4; row++) {
-          const processed = processLine(newGrid[row], true, true);
-          if (!arraysEqual(newGrid[row], processed)) {
-            newGrid[row] = processed;
-            changed = true;
-          }
+          newGrid[row][col] = processed[row];
         }
-        break;
 
-      case 'ArrowUp':
-        for (let col = 0; col < 4; col++) {
-          const column = [newGrid[0][col], newGrid[1][col], newGrid[2][col], newGrid[3][col]];
-          const processed = processLine(column, false, false);
-          for (let row = 0; row < 4; row++) {
-            if (newGrid[row][col] !== processed[row]) {
-              newGrid[row][col] = processed[row];
-              changed = true;
-            }
-          }
+        if (!arraysEqual(oldCol, processed)) {
+          changed = true;
         }
-        break;
 
-      case 'ArrowDown':
-        for (let col = 0; col < 4; col++) {
-          const column = [newGrid[0][col], newGrid[1][col], newGrid[2][col], newGrid[3][col]];
-          const processed = processLine(column, true, true);
-          for (let row = 0; row < 4; row++) {
-            if (newGrid[row][col] !== processed[row]) {
-              newGrid[row][col] = processed[row];
-              changed = true;
-            }
+        processed.forEach((val, i) => {
+          if (val !== oldCol[i] && val === oldCol[i] * 2) {
+            gainedScore += val;
           }
-        }
-        break;
+        });
+      }
+      break;
+  }
+
+  if (changed) {
+    setScore(prev => prev + gainedScore);
+
+    const nextGrid = spawnTile(newGrid);
+    setGrid(nextGrid);
+
+    // Проверка на победу
+    if (!gameWon && nextGrid.some(row => row.includes(2048))) {
+      setGameWon(true);
     }
 
-    if (changed) {
-      setGrid(newGrid);
+    // Проверка на game over
+    if (isGameOver(nextGrid)) {
+      setGameOver(true);
     }
   }
+}
 
   // Обработчик клавиш
   useEffect(() => {
